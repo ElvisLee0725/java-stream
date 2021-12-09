@@ -1,15 +1,25 @@
 import java.util.Arrays;
 import java.util.IntSummaryStatistics;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class Application {
     public static void main(String[] args) {
+        // With Java 8, Collection interface has two methods to generate a Stream.
+        //stream() − Returns a sequential stream considering collection as its source.
+        //parallelStream() − Returns a parallel Stream considering collection as its source.
+
         IntStream
                 .range(1, 10)   // end is exclusive
                 .skip(3)    // Skip the first n numbers
-                .forEach((x) -> System.out.println(x));
+                .forEach(System.out::println);
+
+        // Method reference or double colon operator can be used to refer:
+        // a static method,
+        // an instance method, or
+        // a constructor.
 
         System.out.println();
 
@@ -51,5 +61,15 @@ public class Application {
                 .summaryStatistics();
 
         System.out.println(summary);
+
+        // Collectors are used to combine the result of processing on the elements of a stream.
+        // Collectors can be used to return a list or a string.
+        List<String> strList = Arrays.asList("asdf", "", "", "dfd", "", "eeds");
+        List<String> resList = strList.stream().filter(str -> !str.isEmpty()).collect(Collectors.toList());
+        System.out.println(resList);
+
+        String resStr = strList.stream().filter(str -> !str.isEmpty()).collect(Collectors.joining(", "));
+        System.out.println(resStr);
+
     }
 }
